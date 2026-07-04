@@ -18,7 +18,7 @@ namespace BookStore.Infrastructure.Repositories
         {
         }
 
-        // Bütün müəllifləri kitabları ilə birlikdə gətirir
+       
         public List<Author> GetAllWithBooks()
         {
             return _context.Authors
@@ -26,7 +26,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Id-yə görə müəllifi kitabları ilə birlikdə gətirir
+       
         public Author? GetByIdWithBooks(int id)
         {
             return _context.Authors
@@ -34,7 +34,7 @@ namespace BookStore.Infrastructure.Repositories
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        // Ada görə müəllif axtarışı
+        
         public List<Author> SearchByName(string fullName)
         {
             return _context.Authors
@@ -42,7 +42,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Müəllifin kitablarını gətirir
+      
         public List<Book> GetAuthorBooks(int authorId)
         {
             return _context.Books

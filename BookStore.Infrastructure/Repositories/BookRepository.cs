@@ -19,7 +19,7 @@ namespace BookStore.Infrastructure.Repositories
         {
         }
 
-        // Bütün kitabları müəllifi və janrı ilə birlikdə gətirir
+      
         public List<Book> GetAllWithDetails()
         {
             return _context.Books
@@ -28,7 +28,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Id-yə görə kitabı müəllifi və janrı ilə birlikdə gətirir
+        
         public Book? GetByIdWithDetails(int id)
         {
             return _context.Books
@@ -40,7 +40,7 @@ namespace BookStore.Infrastructure.Repositories
        
        
 
-        // Müəllifə görə kitablar
+     
         public List<Book> GetBooksByAuthor(int authorId)
         {
             return _context.Books
@@ -48,7 +48,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Janra görə kitablar
+   
         public List<Book> GetBooksByGenre(int genreId)
         {
             return _context.Books
@@ -56,7 +56,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Qiymət aralığına görə kitablar
+       
         public List<Book> GetBooksByPrice(double minPrice, double maxPrice)
         {
             return _context.Books

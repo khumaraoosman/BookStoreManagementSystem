@@ -19,7 +19,7 @@ namespace BookStore.Infrastructure.Repositories
         {
         }
 
-        // Bütün müştəriləri sifarişləri ilə birlikdə gətirir
+       
         public List<Customer> GetAllWithOrders()
         {
             return _context.Customers
@@ -27,7 +27,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Id-yə görə müştərini sifarişləri ilə birlikdə gətirir
+        
         public Customer? GetByIdWithOrders(int id)
         {
             return _context.Customers
@@ -35,7 +35,7 @@ namespace BookStore.Infrastructure.Repositories
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        // Ada görə müştəri axtarışı
+        
         public List<Customer> SearchByName(string name)
         {
             return _context.Customers
@@ -43,7 +43,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Müştərinin sifarişlərini gətirir
+     
         public List<Order> GetOrders(int customerId)
         {
             return _context.Orders

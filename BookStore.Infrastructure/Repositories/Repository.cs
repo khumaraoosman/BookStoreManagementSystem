@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Infrastructure.Repositories
 {
-    public class Repository<T> where T : BaseEntity
+    public class Repository<T>: IRepository<T> where T : BaseEntity
     {
         protected readonly BookStoreDbContext _context;
 

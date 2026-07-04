@@ -20,7 +20,7 @@ namespace BookStore.Infrastructure.Repositories
         {
         }
 
-        // Bütün janrları kitabları ilə birlikdə gətirir
+       
         public List<Genre> GetAllWithBooks()
         {
             return _context.Genres
@@ -28,7 +28,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Id-yə görə janrı kitabları ilə birlikdə gətirir
+       
         public Genre? GetByIdWithBooks(int id)
         {
             return _context.Genres
@@ -36,7 +36,7 @@ namespace BookStore.Infrastructure.Repositories
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        // Ada görə janr axtarışı
+        
         public List<Genre> SearchByName(string name)
         {
             return _context.Genres
@@ -44,7 +44,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Janra aid kitabları gətirir
+       
         public List<Book> GetGenreBooks(int genreId)
         {
             return _context.Books

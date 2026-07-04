@@ -1,11 +1,9 @@
 ﻿using BookStore.Domain.Interfaces;
+using BookStore.Infrastructure.Data;
 using BookStore.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BookStore.Infrastructure.DependencyInjection
 {
@@ -13,6 +11,7 @@ namespace BookStore.Infrastructure.DependencyInjection
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
+            services.AddDbContext<BookStoreDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddScoped<IAuthorRepository, AuthorRepository>();
@@ -21,6 +20,7 @@ namespace BookStore.Infrastructure.DependencyInjection
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+           
 
             return services;
         }

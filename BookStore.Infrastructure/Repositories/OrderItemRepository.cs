@@ -24,7 +24,6 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Id-yə görə OrderItem-ı Order və Book ilə birlikdə gətirir
         public OrderItem? GetByIdWithDetails(int id)
         {
             return _context.OrderItems
@@ -33,7 +32,7 @@ namespace BookStore.Infrastructure.Repositories
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        // Müəyyən sifarişin bütün məhsullarını gətirir
+        
         public List<OrderItem> GetByOrderId(int orderId)
         {
             return _context.OrderItems
@@ -41,7 +40,7 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Müəyyən kitaba aid bütün sifariş elementlərini gətirir
+      
         public List<OrderItem> GetByBookId(int bookId)
         {
             return _context.OrderItems

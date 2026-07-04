@@ -1,30 +1,41 @@
 ﻿using BookStore.Application.DependencyInjection;
 using BookStore.ConsoleUI;
+using BookStore.ConsoleUI.Menus;
+using BookStore.Domain.Entities;
 using BookStore.Domain.Interfaces;
 using BookStore.Infrastructure.Data;
 using BookStore.Infrastructure.DependencyInjection;
 using BookStore.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+
+
 using System;
 
 class Program
 {
     static void Main(string[] args)
     {
-        // 1. ServiceCollection yaradılır
         var services = new ServiceCollection();
-
-        // 2. DbContext + Infrastructure servisləri
+        services.AddLogging();
+        // Repozitoriyaları qeydiyyatdan keçirən mövcud metodların
         services.AddInfrastructureServices();
-
-        // 3. Application servisləri
         services.AddApplicationServices();
 
-        // 4. ServiceProvider yaradılır
+        // 👇 MENYULARIN QEYDİYYATINI BİRBAŞA BURADA YAZ:
+        services.AddTransient<ConsoleApp>();
+       
+        services.AddTransient<BookMenu>();
+        services.AddTransient<AuthorMenu>();
+        services.AddTransient<GenreMenu>();
+        services.AddTransient<CustomerMenu>();
+        services.AddTransient<OrderMenu>();
+        services.AddTransient<OrderItemMenu>();
+
+        // Provider yaradılır
         var serviceProvider = services.BuildServiceProvider();
 
-        // 5. ConsoleUI start edilir
+        // Start
         var app = new ConsoleApp(serviceProvider);
         app.Run();
     }
