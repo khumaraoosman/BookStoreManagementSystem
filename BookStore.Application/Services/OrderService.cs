@@ -12,20 +12,27 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Services
 {
-    public class OrderService : CrudService<CreateOrderDto, UpdateOrderDto, OrderDto, Order>, IOrderService
+    public class OrderService
+    : CrudService<CreateOrderDto, UpdateOrderDto, OrderDto, Order>, IOrderService
     {
-        private readonly IMapper _mapper;
-
-        public OrderService(IRepository<Order> repository, IMapper mapper) : base(repository, mapper)
+        public OrderService(IRepository<Order> repository, IMapper mapper)
+            : base(repository, mapper)
         {
-            _mapper = mapper;
         }
 
-        public override async Task<OrderDto> AddAsync(CreateOrderDto dto)
+        public override void Add(CreateOrderDto dto)
         {
             Helper.CheckId(dto.CustomerId, "Customer");
 
-            return await base.AddAsync(dto);
+            base.Add(dto);
+        }
+
+        public override void Update(UpdateOrderDto dto)
+        {
+            Helper.CheckId(dto.Id, "Order");
+            Helper.CheckId(dto.CustomerId, "Customer");
+
+            base.Update(dto);
         }
     }
 }

@@ -9,8 +9,16 @@ namespace BookStore.Domain.Interfaces
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        decimal GetTotalPrice(int orderId);
+        List<Order> GetAllWithDetails();
 
-        List<Order> GetCustomerOrders(int customerId);
+        Order? GetByIdWithDetails(int id);
+
+        List<Order> GetOrdersByCustomer(int customerId);
+
+        List<Order> GetOrdersByDate(DateTime date);
+
+        List<Order> GetOrdersByTotalPrice(double minPrice, double maxPrice);
+
+        decimal GetTotalPrice(int orderId);
     }
 }

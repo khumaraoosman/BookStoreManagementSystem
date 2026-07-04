@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookStore.Application.Interfaces;
+﻿using BookStore.Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BookStore.ConsoleUI.Menus;
 
-public class AuthorMenu
+public class OrderMenu
 {
-    private readonly IAuthorService _authorService;
+    private readonly IOrderService _orderService;
 
-    public AuthorMenu(IServiceProvider serviceProvider)
+    public OrderMenu(IServiceProvider serviceProvider)
     {
-        _authorService = serviceProvider.GetRequiredService<IAuthorService>();
+        _orderService = serviceProvider.GetRequiredService<IOrderService>();
     }
 
     public void Show()
@@ -23,7 +18,7 @@ public class AuthorMenu
         {
             Console.Clear();
 
-            Console.WriteLine("===== AUTHOR MENU =====");
+            Console.WriteLine("===== ORDER MENU =====");
             Console.WriteLine("1. Add");
             Console.WriteLine("2. Update");
             Console.WriteLine("3. Delete");
@@ -36,16 +31,16 @@ public class AuthorMenu
             switch (choice)
             {
                 case "1":
-                    Console.WriteLine("Add Author");
+                    Console.WriteLine("Add Order");
                     break;
                 case "2":
-                    Console.WriteLine("Update Author");
+                    Console.WriteLine("Update Order");
                     break;
                 case "3":
-                    Console.WriteLine("Delete Author");
+                    Console.WriteLine("Delete Order");
                     break;
                 case "4":
-                    Console.WriteLine("Get All Authors");
+                    Console.WriteLine("Get All Orders");
                     break;
                 case "5":
                     Console.WriteLine("Get By Id");

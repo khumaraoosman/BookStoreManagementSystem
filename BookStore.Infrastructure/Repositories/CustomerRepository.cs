@@ -44,18 +44,14 @@ namespace BookStore.Infrastructure.Repositories
         }
 
         // Müştərinin sifarişlərini gətirir
-        public List<Order> GetCustomerOrders(int customerId)
+        public List<Order> GetOrders(int customerId)
         {
             return _context.Orders
                 .Where(x => x.CustomerId == customerId)
                 .ToList();
         }
 
-        public List<Order> GetOrders(int customerId)
-        {
-            throw new NotImplementedException();
-        }
-
+        
        
     }
 

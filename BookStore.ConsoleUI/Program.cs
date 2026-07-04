@@ -1,25 +1,31 @@
-﻿using BookStore.ConsoleUI.Menus;
+﻿using BookStore.Application.DependencyInjection;
+using BookStore.ConsoleUI;
+using BookStore.Domain.Interfaces;
+using BookStore.Infrastructure.Data;
+using BookStore.Infrastructure.DependencyInjection;
+using BookStore.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
-namespace BookStore.ConsoleUI
+class Program
 {
-    var services = new ServiceCollection();
+    static void Main(string[] args)
+    {
+        // 1. ServiceCollection yaradılır
+        var services = new ServiceCollection();
 
-    services.AddApplication();
-    services.AddInfrastructure();
+        // 2. DbContext + Infrastructure servisləri
+        services.AddInfrastructureServices();
 
-// Menus
-    services.AddSingleton<MainMenu>();
-    services.AddSingleton<BookMenu>();
-    services.AddSingleton<AuthorMenu>();
-    services.AddSingleton<CustomerMenu>();
-    services.AddSingleton<OrderMenu>();
+        // 3. Application servisləri
+        services.AddApplicationServices();
 
-    var provider = services.BuildServiceProvider();
+        // 4. ServiceProvider yaradılır
+        var serviceProvider = services.BuildServiceProvider();
 
-    var main = provider.GetRequiredService<MainMenu>();
-    main.Show();
-       
-    
+        // 5. ConsoleUI start edilir
+        var app = new ConsoleApp(serviceProvider);
+        app.Run();
+    }
 }
-    

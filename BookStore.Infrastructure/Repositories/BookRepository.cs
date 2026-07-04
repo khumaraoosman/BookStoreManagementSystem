@@ -37,13 +37,8 @@ namespace BookStore.Infrastructure.Repositories
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        // Kitab adına görə axtarış
-        public List<Book> SearchByName(string name)
-        {
-            return _context.Books
-                .Where(x => x.Name.Contains(name))
-                .ToList();
-        }
+       
+       
 
         // Müəllifə görə kitablar
         public List<Book> GetBooksByAuthor(int authorId)
@@ -71,9 +66,10 @@ namespace BookStore.Infrastructure.Repositories
 
         public List<Book> Search(string text)
         {
-            throw new NotImplementedException();
+            return _context.Books
+                .Where(x => x.Name.Contains(text))
+                .ToList();
         }
 
-       
     }
 }

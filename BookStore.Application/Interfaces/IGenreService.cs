@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Interfaces
 {
-    public interface IGenreService : ICrudService<CreateGenreDto, UpdateGenreDto, GenreDto, Genre>
+    public interface IGenreService
+     : ICrudService<CreateGenreDto, UpdateGenreDto, GenreDto, Genre>
     {
-       
     }
-
 
 
 }

@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Interfaces
 {
-    public interface IAuthorService : ICrudService<CreateAuthorDto, UpdateAuthorDto, AuthorDto, Author>
+    public interface IAuthorService
+     : ICrudService<CreateAuthorDto, UpdateAuthorDto, AuthorDto, Author>
     {
-       
     }
-
 }

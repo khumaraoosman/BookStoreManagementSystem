@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 
 namespace BookStore.Infrastructure.Repositories
 {
-
-
     public class OrderRepository : Repository<Order>, IOrderRepository
     {
         public OrderRepository(BookStoreDbContext context)
@@ -19,7 +17,6 @@ namespace BookStore.Infrastructure.Repositories
         {
         }
 
-        // Bütün sifarişləri müştəri və sifariş elementləri ilə birlikdə gətirir
         public List<Order> GetAllWithDetails()
         {
             return _context.Orders
@@ -28,7 +25,6 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Id-yə görə sifarişi bütün məlumatları ilə birlikdə gətirir
         public Order? GetByIdWithDetails(int id)
         {
             return _context.Orders
@@ -37,12 +33,6 @@ namespace BookStore.Infrastructure.Repositories
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public List<Order> GetCustomerOrders(int customerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Müştərinin bütün sifarişlərini gətirir
         public List<Order> GetOrdersByCustomer(int customerId)
         {
             return _context.Orders
@@ -50,7 +40,6 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Tarixə görə sifarişləri gətirir
         public List<Order> GetOrdersByDate(DateTime date)
         {
             return _context.Orders
@@ -58,7 +47,6 @@ namespace BookStore.Infrastructure.Repositories
                 .ToList();
         }
 
-        // Qiymət aralığına görə sifarişlər
         public List<Order> GetOrdersByTotalPrice(double minPrice, double maxPrice)
         {
             return _context.Orders
@@ -69,8 +57,14 @@ namespace BookStore.Infrastructure.Repositories
 
         public decimal GetTotalPrice(int orderId)
         {
-            throw new NotImplementedException();
-        }
+            var order = _context.Orders.FirstOrDefault(x => x.Id == orderId);
 
+            if (order == null)
+                return 0;
+
+            return (decimal)order.TotalPrice;
+        }
     }
+
+
 }

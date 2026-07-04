@@ -13,21 +13,27 @@ using System.Threading.Tasks;
 namespace BookStore.Application.Services
 {
 
-    public class GenreService : CrudService<CreateGenreDto, UpdateGenreDto, GenreDto, Genre>, IGenreService
+    public class GenreService
+    : CrudService<CreateGenreDto, UpdateGenreDto, GenreDto, Genre>, IGenreService
     {
-        private readonly IMapper _mapper;
-
-        public GenreService(IRepository<Genre> repository, IMapper mapper) : base(repository, mapper)
+        public GenreService(IRepository<Genre> repository, IMapper mapper)
+            : base(repository, mapper)
         {
-            _mapper = mapper;
         }
 
-        public override async Task<GenreDto> AddAsync(CreateGenreDto dto)
+        public override void Add(CreateGenreDto dto)
         {
             Helper.CheckString(dto.Name, "Genre Name");
-         
 
-            return await base.AddAsync(dto);
+            base.Add(dto);
+        }
+
+        public override void Update(UpdateGenreDto dto)
+        {
+            Helper.CheckId(dto.Id, "Genre");
+            Helper.CheckString(dto.Name, "Genre Name");
+
+            base.Update(dto);
         }
     }
 }

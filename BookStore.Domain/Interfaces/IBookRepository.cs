@@ -14,5 +14,11 @@ namespace BookStore.Domain.Interfaces
         List<Book> GetBooksByAuthor(int authorId);
 
         List<Book> GetBooksByGenre(int genreId);
+
+        List<Book> GetAllWithDetails();
+
+        Book? GetByIdWithDetails(int id);
+
+        List<Book> GetBooksByPrice(double minPrice, double maxPrice);
     }
 }

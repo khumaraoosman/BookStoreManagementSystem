@@ -11,43 +11,57 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Services
 {
-    public class CrudService<TCreateDto, TUpdateDto, TDto, TEntity> : ICrudService<TCreateDto, TUpdateDto, TDto,TEntity> where TEntity : BaseEntity
+    public class CrudService<TCreateDto, TUpdateDto, TDto, TEntity>
+    : ICrudService<TCreateDto, TUpdateDto, TDto, TEntity>
+    where TEntity : BaseEntity
     {
-        
         protected readonly IRepository<TEntity> _repository;
         protected readonly IMapper _mapper;
 
-        public CrudService(IRepository<TEntity> repository, IMapper mapper) 
+        public CrudService(IRepository<TEntity> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
+        }
 
-        }
-        public virtual Task<TDto> AddAsync(TCreateDto dto)
+        public virtual void Add(TCreateDto createDto)
         {
-            throw new NotImplementedException();
+            var entity = _mapper.Map<TEntity>(createDto);
+            _repository.Add(entity);
         }
-        public void Add(TCreateDto createDto) 
+
+        public virtual IEnumerable<TDto> GetAll()
         {
-            throw new NotImplementedException();
+            var entities = _repository.GetAll();
+            return _mapper.Map<List<TDto>>(entities);
         }
-        public void Update(TUpdateDto updateDto) 
+
+        public virtual TDto? GetById(int id)
         {
-            throw new NotImplementedException();
+            var entity = _repository.GetById(id);
+
+            if (entity == null)
+                return default;
+
+            return _mapper.Map<TDto>(entity);
         }
-        public void Delete(int id)
+
+        public virtual void Update(TUpdateDto updateDto)
         {
-            throw new NotImplementedException();
+            var entity = _mapper.Map<TEntity>(updateDto);
+            _repository.Update(entity);
         }
-        public IEnumerable<TDto> GetAll() 
+
+        public virtual void Delete(int id)
         {
-            throw new NotImplementedException();
-        }
-        public TDto GetById(int id)
-        {
-            throw new NotImplementedException();
+            var entity = _repository.GetById(id);
+
+            if (entity == null)
+                throw new Exception("Data not found.");
+
+            _repository.Delete(entity);
         }
     }
 
-   
+
 }

@@ -12,24 +12,29 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Services
 {
-    public class CustomerService : CrudService<CreateCustomerDto, UpdateCustomerDto, CustomerDto, Customer>, ICustomerService
+    public class CustomerService
+    : CrudService<CreateCustomerDto, UpdateCustomerDto, CustomerDto, Customer>, ICustomerService
     {
-        private readonly IMapper _mapper;
-
-        public CustomerService(IRepository<Customer> repository, IMapper mapper) : base(repository, mapper)
+        public CustomerService(IRepository<Customer> repository, IMapper mapper)
+            : base(repository, mapper)
         {
-            _mapper = mapper;
-
         }
-        public override async Task<CustomerDto> AddAsync(CreateCustomerDto dto)
+
+        public override void Add(CreateCustomerDto dto)
         {
-            Helper.CheckString(dto.Name, "Name");
+            Helper.CheckString(dto.Name, "Customer Name");
             Helper.CheckString(dto.Address, "Address");
 
-            return await base.AddAsync(dto);
+            base.Add(dto);
         }
 
+        public override void Update(UpdateCustomerDto dto)
+        {
+            Helper.CheckId(dto.Id, "Customer");
+            Helper.CheckString(dto.Name, "Customer Name");
+            Helper.CheckString(dto.Address, "Address");
 
-
+            base.Update(dto);
+        }
     }
 }

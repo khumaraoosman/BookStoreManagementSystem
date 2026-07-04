@@ -7,8 +7,17 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Interfaces
 {
-    public interface IGenreRepository : IRepository<Genre>
-    {
-        List<Book> GetGenreBooks(int genreId);
-    }
+   
+    
+        public interface IGenreRepository : IRepository<Genre>
+        {
+            List<Genre> GetAllWithBooks();
+
+            Genre? GetByIdWithBooks(int id);
+
+            List<Genre> SearchByName(string name);
+
+            List<Book> GetGenreBooks(int genreId);
+        }
+    
 }

@@ -14,22 +14,25 @@ namespace BookStore.Application.Services
 {
     public class AuthorService : CrudService<CreateAuthorDto, UpdateAuthorDto, AuthorDto, Author>, IAuthorService
     {
-        private readonly IMapper _mapper;
-
-
-        public AuthorService(IRepository<Author> repository, IMapper mapper) : base(repository, mapper)
+        public AuthorService(IRepository<Author> repository, IMapper mapper)
+       : base(repository, mapper)
         {
-            _mapper = mapper;
         }
-        public override async Task<AuthorDto> AddAsync(CreateAuthorDto dto)
+
+        public override void Add(CreateAuthorDto dto)
         {
             Helper.CheckString(dto.FullName, "Author Name");
 
-            return await base.AddAsync(dto);
+            base.Add(dto);
         }
 
+        public override void Update(UpdateAuthorDto dto)
+        {
+            Helper.CheckId(dto.Id, "Author");
+            Helper.CheckString(dto.FullName, "Author Name");
 
-
+            base.Update(dto);
+        }
     }
 
 }
