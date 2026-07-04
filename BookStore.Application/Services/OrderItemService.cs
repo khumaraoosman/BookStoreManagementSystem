@@ -4,27 +4,27 @@ using BookStore.Application.Helpers;
 using BookStore.Application.Interfaces;
 using BookStore.Domain.Entities;
 using BookStore.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore.Application.Services
 {
     public class OrderItemService
-     : CrudService<CreateOrderItemDto, UpdateOrderItemDto, OrderItemDto, OrderItem>, IOrderItemService
+        : CrudService<CreateOrderItemDto, UpdateOrderItemDto, OrderItemDto, OrderItem>, IOrderItemService
     {
-        public OrderItemService(IRepository<OrderItem> repository, IMapper mapper)
+        private readonly IOrderItemRepository _orderItemRepository;
+        private readonly IMapper _mapper;
+
+        public OrderItemService(IOrderItemRepository repository, IMapper mapper)
             : base(repository, mapper)
         {
+            _orderItemRepository = repository;
+            _mapper = mapper;
         }
 
         public override void Add(CreateOrderItemDto dto)
         {
             Helper.CheckId(dto.OrderId, "Order");
             Helper.CheckId(dto.BookId, "Book");
-
             base.Add(dto);
         }
 
@@ -33,8 +33,20 @@ namespace BookStore.Application.Services
             Helper.CheckId(dto.Id, "Order Item");
             Helper.CheckId(dto.OrderId, "Order");
             Helper.CheckId(dto.BookId, "Book");
-
             base.Update(dto);
+        }
+
+        public override IEnumerable<OrderItemDto> GetAll()
+        {
+            var items = _orderItemRepository.GetAllWithDetails();
+            return _mapper.Map<List<OrderItemDto>>(items);
+        }
+
+        public override OrderItemDto? GetById(int id)
+        {
+            var item = _orderItemRepository.GetByIdWithDetails(id);
+            if (item == null) return null;
+            return _mapper.Map<OrderItemDto>(item);
         }
     }
 }

@@ -57,11 +57,11 @@ namespace BookStore.ConsoleUI.Menus
 
         private void Add()
         {
-            Console.Write("Müellifin adı: ");
+            Console.Write("Muellifin adı: ");
             var fullName = Console.ReadLine() ?? "";
 
             _authorService.Add(new CreateAuthorDto { FullName = fullName });
-            Console.WriteLine("Muellif əlavə olundu.");
+            Console.WriteLine("Muellif elave olundu.");
         }
 
         private void Update()

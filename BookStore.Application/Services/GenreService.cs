@@ -4,27 +4,26 @@ using BookStore.Application.Helpers;
 using BookStore.Application.Interfaces;
 using BookStore.Domain.Entities;
 using BookStore.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore.Application.Services
 {
-
     public class GenreService
-    : CrudService<CreateGenreDto, UpdateGenreDto, GenreDto, Genre>, IGenreService
+        : CrudService<CreateGenreDto, UpdateGenreDto, GenreDto, Genre>, IGenreService
     {
-        public GenreService(IRepository<Genre> repository, IMapper mapper)
+        private readonly IGenreRepository _genreRepository;
+        private readonly IMapper _mapper;
+
+        public GenreService(IGenreRepository repository, IMapper mapper)
             : base(repository, mapper)
         {
+            _genreRepository = repository;
+            _mapper = mapper;
         }
 
         public override void Add(CreateGenreDto dto)
         {
             Helper.CheckString(dto.Name, "Genre Name");
-
             base.Add(dto);
         }
 
@@ -32,8 +31,20 @@ namespace BookStore.Application.Services
         {
             Helper.CheckId(dto.Id, "Genre");
             Helper.CheckString(dto.Name, "Genre Name");
-
             base.Update(dto);
+        }
+
+        public override IEnumerable<GenreDto> GetAll()
+        {
+            var genres = _genreRepository.GetAllWithBooks();
+            return _mapper.Map<List<GenreDto>>(genres);
+        }
+
+        public override GenreDto? GetById(int id)
+        {
+            var genre = _genreRepository.GetByIdWithBooks(id);
+            if (genre == null) return null;
+            return _mapper.Map<GenreDto>(genre);
         }
     }
 }

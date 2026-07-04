@@ -4,25 +4,25 @@ using BookStore.Application.Helpers;
 using BookStore.Application.Interfaces;
 using BookStore.Domain.Entities;
 using BookStore.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore.Application.Services
 {
     public class AuthorService : CrudService<CreateAuthorDto, UpdateAuthorDto, AuthorDto, Author>, IAuthorService
     {
-        public AuthorService(IRepository<Author> repository, IMapper mapper)
-       : base(repository, mapper)
+        private readonly IAuthorRepository _authorRepository;
+        private readonly IMapper _mapper;
+
+        public AuthorService(IAuthorRepository repository, IMapper mapper)
+            : base(repository, mapper)
         {
+            _authorRepository = repository;
+            _mapper = mapper;
         }
 
         public override void Add(CreateAuthorDto dto)
         {
             Helper.CheckString(dto.FullName, "Author Name");
-
             base.Add(dto);
         }
 
@@ -30,9 +30,20 @@ namespace BookStore.Application.Services
         {
             Helper.CheckId(dto.Id, "Author");
             Helper.CheckString(dto.FullName, "Author Name");
-
             base.Update(dto);
         }
-    }
 
+        public override IEnumerable<AuthorDto> GetAll()
+        {
+            var authors = _authorRepository.GetAllWithBooks();
+            return _mapper.Map<List<AuthorDto>>(authors);
+        }
+
+        public override AuthorDto? GetById(int id)
+        {
+            var author = _authorRepository.GetByIdWithBooks(id);
+            if (author == null) return null;
+            return _mapper.Map<AuthorDto>(author);
+        }
+    }
 }
