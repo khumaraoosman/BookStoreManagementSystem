@@ -48,6 +48,12 @@ namespace BookStore.ConsoleUI.Menus
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Xeta: {ex.Message}");
+                    var inner = ex.InnerException;
+                    while (inner != null)
+                    {
+                        Console.WriteLine($"  -> {inner.Message}");
+                        inner = inner.InnerException;
+                    }
                 }
 
                 Console.WriteLine("\nDavam etmek üçün istenilen düymeye basın...");
@@ -106,7 +112,7 @@ namespace BookStore.ConsoleUI.Menus
                 GenreId = genreId
             });
 
-            Console.WriteLine("Kitab yeniləndi.");
+            Console.WriteLine("Kitab yenilendi.");
         }
 
         private void Delete()

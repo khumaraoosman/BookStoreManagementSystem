@@ -47,7 +47,13 @@ namespace BookStore.ConsoleUI.Menus
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Xəta: {ex.Message}");
+                    Console.WriteLine($"Xeta: {ex.Message}");
+                    var inner = ex.InnerException;
+                    while (inner != null)
+                    {
+                        Console.WriteLine($"  -> {inner.Message}");
+                        inner = inner.InnerException;
+                    }
                 }
 
                 Console.WriteLine("\nDavam etmek üçün istenilen düymeye basın...");

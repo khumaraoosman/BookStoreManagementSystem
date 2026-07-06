@@ -30,7 +30,6 @@ class Program
         services.AddTransient<GenreMenu>();
         services.AddTransient<CustomerMenu>();
         services.AddTransient<OrderMenu>();
-        services.AddTransient<OrderItemMenu>();
 
         // Provider yaradılır
         var serviceProvider = services.BuildServiceProvider();

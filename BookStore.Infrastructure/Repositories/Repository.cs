@@ -37,10 +37,17 @@ namespace BookStore.Infrastructure.Repositories
 
         public void Update(T entity)
         {
+            var local = _context.Set<T>().Local
+                .FirstOrDefault(e => e.Id == entity.Id);
+
+            if (local != null)
+            {
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
             _context.Set<T>().Update(entity);
             _context.SaveChanges();
         }
-
         public void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);

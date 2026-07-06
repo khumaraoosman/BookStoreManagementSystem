@@ -27,7 +27,6 @@ namespace BookStore.ConsoleUI
                 Console.WriteLine("3. Genres");
                 Console.WriteLine("4. Customers");
                 Console.WriteLine("5. Orders");
-                Console.WriteLine("6. Order Items");
                 Console.WriteLine("0. Exit");
                 Console.Write("Choice: ");
 
@@ -58,11 +57,6 @@ namespace BookStore.ConsoleUI
                     case "5":
                         var orderMenu = new OrderMenu(_serviceProvider);
                         orderMenu.Show();
-                        break;
-
-                    case "6":
-                        var orderItemMenu = new OrderItemMenu(_serviceProvider);
-                        orderItemMenu.Show();
                         break;
 
                     case "0":
